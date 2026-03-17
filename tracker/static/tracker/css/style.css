@@ -1,0 +1,220 @@
+/* ── Base ─────────────────────────────────────────────── */
+:root {
+  --green:   #22c55e;
+  --green-dark: #16a34a;
+  --surface: #f8fafc;
+  --card-bg: #ffffff;
+  --border:  #e2e8f0;
+  --text:    #0f172a;
+  --muted:   #64748b;
+  --radius:  12px;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 15px;
+}
+
+h1, h2, h3, h4, h5, h6,
+.navbar-brand, .page-title {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.fw-500 { font-weight: 500; }
+.fw-600 { font-weight: 600; }
+
+/* ── Navbar ───────────────────────────────────────────── */
+.navbar {
+  background: #0f172a;
+  border-bottom: 1px solid #1e293b;
+  padding: 0.75rem 0;
+}
+
+.navbar-brand {
+  font-size: 1.3rem;
+  letter-spacing: -0.5px;
+}
+
+.brand-icon { font-size: 1.1rem; }
+
+.navbar .nav-link {
+  color: #94a3b8 !important;
+  font-weight: 500;
+  padding: 0.4rem 0.85rem !important;
+  border-radius: 8px;
+  transition: all 0.18s;
+  font-size: 0.9rem;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+  color: #f1f5f9 !important;
+  background: #1e293b;
+}
+
+/* ── Page title ───────────────────────────────────────── */
+.page-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+/* ── Macro cards ──────────────────────────────────────── */
+.macro-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+  height: 100%;
+}
+
+.macro-card .macro-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-bottom: 0.2rem;
+}
+
+.macro-card .macro-value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.65rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.macro-card .macro-goal {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.macro-card .macro-pct {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin-top: 4px;
+  text-align: right;
+}
+
+.calories-card { border-top: 3px solid #f59e0b; }
+.protein-card  { border-top: 3px solid var(--green); }
+.carbs-card    { border-top: 3px solid #06b6d4; }
+.fats-card     { border-top: 3px solid #ef4444; }
+
+/* ── Goal bar ─────────────────────────────────────────── */
+.goal-bar-wrapper {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+}
+
+/* ── Meal sections ────────────────────────────────────── */
+.meal-section { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.meal-heading {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 1.25rem;
+  margin: 0;
+  background: #f8fafc;
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+}
+
+.table { margin-bottom: 0; }
+.table th {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  font-weight: 600;
+  border-top: none;
+  padding: 0.6rem 1rem;
+}
+.table td { padding: 0.65rem 1rem; }
+.table-hover tbody tr:hover { background: #f8fafc; }
+
+/* ── Form card ────────────────────────────────────────── */
+.form-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+}
+
+.form-control,
+.form-select {
+  border-radius: 8px;
+  border-color: var(--border);
+  font-size: 0.95rem;
+  padding: 0.5rem 0.85rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(34,197,94,.15);
+}
+
+/* ── Buttons ──────────────────────────────────────────── */
+.btn-primary {
+  background: var(--green);
+  border-color: var(--green);
+  font-weight: 600;
+  border-radius: 8px;
+}
+.btn-primary:hover {
+  background: var(--green-dark);
+  border-color: var(--green-dark);
+}
+
+/* ── Empty state ──────────────────────────────────────── */
+.empty-state { padding: 3rem 1rem; }
+.empty-icon  { font-size: 3.5rem; }
+
+/* ── Tip box ──────────────────────────────────────────── */
+.tip-box {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+}
+
+/* ── History cards ────────────────────────────────────── */
+.history-day-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+}
+
+.history-day-header { border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; }
+
+.badge-macro {
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+}
+.calories-badge { background:#fef3c7; color:#92400e; }
+.protein-badge  { background:#dcfce7; color:#166534; }
+.carbs-badge    { background:#cffafe; color:#155e75; }
+.fats-badge     { background:#fee2e2; color:#991b1b; }
+
+.progress-mini { display: flex; align-items: center; gap: 6px; }
+.mini-label    { font-size: 0.75rem; font-weight: 500; color: var(--muted); width: 50px; }
+
+/* ── Alerts ───────────────────────────────────────────── */
+.alert-None, .alert- { --bs-alert-color: #166534; --bs-alert-bg: #dcfce7; --bs-alert-border-color: #bbf7d0; }
+
+/* ── Responsive ───────────────────────────────────────── */
+@media (max-width: 576px) {
+  .page-title { font-size: 1.4rem; }
+  .macro-card .macro-value { font-size: 1.3rem; }
+  .form-card { padding: 1.25rem; }
+}

@@ -1,0 +1,83 @@
+{% extends 'tracker/base.html' %}
+{% block title %}History — FuelTrack{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2">
+  <div>
+    <h1 class="page-title mb-0">7-Day History</h1>
+    <p class="text-muted mb-0">Your nutrition over the past week</p>
+  </div>
+  <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary btn-sm">← Today</a>
+</div>
+
+{% for day in days %}
+<div class="history-day-card mb-3">
+  <div class="history-day-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <div>
+      <span class="fw-600">{{ day.date|date:"l" }}</span>
+      <span class="text-muted ms-2 small">{{ day.date|date:"M j, Y" }}</span>
+    </div>
+    <div class="d-flex gap-3 flex-wrap">
+      <span class="badge-macro calories-badge">🔥 {{ day.calories }} kcal</span>
+      <span class="badge-macro protein-badge">💪 {{ day.protein }}g protein</span>
+      <span class="badge-macro carbs-badge">🌾 {{ day.carbs }}g carbs</span>
+      <span class="badge-macro fats-badge">🥑 {{ day.fats }}g fats</span>
+    </div>
+  </div>
+
+  {% if day.goal %}
+  <div class="history-progress mt-2">
+    <div class="d-flex gap-3 flex-wrap">
+      <div class="progress-mini">
+        <span class="mini-label">Calories</span>
+        <div class="progress" style="height:5px;width:100px">
+          <div class="progress-bar bg-warning" style="width:{% widthratio day.calories day.goal.calorie_goal 100 %}%"></div>
+        </div>
+      </div>
+      <div class="progress-mini">
+        <span class="mini-label text-success">Protein</span>
+        <div class="progress" style="height:5px;width:100px">
+          <div class="progress-bar bg-success" style="width:{% widthratio day.protein day.goal.protein_goal 100 %}%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if day.entries %}
+  <details class="mt-2">
+    <summary class="text-muted small" style="cursor:pointer">{{ day.entries.count }} item{{ day.entries.count|pluralize }} logged — click to expand</summary>
+    <div class="table-responsive mt-2">
+      <table class="table table-sm align-middle mb-0">
+        <thead>
+          <tr>
+            <th>Food</th>
+            <th>Meal</th>
+            <th class="text-center">Cal</th>
+            <th class="text-center">Protein</th>
+            <th class="text-center">Carbs</th>
+            <th class="text-center">Fats</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for entry in day.entries %}
+          <tr>
+            <td class="fw-500">{{ entry.name }}</td>
+            <td class="text-muted small text-capitalize">{{ entry.meal_type }}</td>
+            <td class="text-center">{{ entry.calories }}</td>
+            <td class="text-center text-success fw-500">{{ entry.protein }}g</td>
+            <td class="text-center">{{ entry.carbs }}g</td>
+            <td class="text-center">{{ entry.fats }}g</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </details>
+  {% else %}
+  <p class="text-muted small mt-2 mb-0">Nothing logged.</p>
+  {% endif %}
+</div>
+{% endfor %}
+
+{% endblock %}

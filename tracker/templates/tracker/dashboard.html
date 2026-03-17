@@ -1,0 +1,133 @@
+{% extends 'tracker/base.html' %}
+{% block title %}Today — FuelTrack{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2">
+  <div>
+    <h1 class="page-title mb-0">Today's Log</h1>
+    <p class="text-muted mb-0">{{ today|date:"l, F j, Y" }}</p>
+  </div>
+  <a href="{% url 'add_food' %}" class="btn btn-primary px-4">+ Log Food</a>
+</div>
+
+<!-- Macro summary cards -->
+<div class="row g-3 mb-4">
+
+  <div class="col-6 col-md-3">
+    <div class="macro-card calories-card">
+      <div class="macro-label">Calories</div>
+      <div class="macro-value">{{ total_calories }}</div>
+      <div class="macro-goal">/ {{ goal.calorie_goal }} kcal</div>
+      <div class="progress mt-2" style="height:6px">
+        <div class="progress-bar bg-warning" style="width:{{ pct_calories }}%"></div>
+      </div>
+      <div class="macro-pct">{{ pct_calories }}%</div>
+    </div>
+  </div>
+
+  <div class="col-6 col-md-3">
+    <div class="macro-card protein-card">
+      <div class="macro-label">Protein</div>
+      <div class="macro-value">{{ total_protein }}g</div>
+      <div class="macro-goal">/ {{ goal.protein_goal }}g</div>
+      <div class="progress mt-2" style="height:6px">
+        <div class="progress-bar bg-success" style="width:{{ pct_protein }}%"></div>
+      </div>
+      <div class="macro-pct">{{ pct_protein }}%</div>
+    </div>
+  </div>
+
+  <div class="col-6 col-md-3">
+    <div class="macro-card carbs-card">
+      <div class="macro-label">Carbs</div>
+      <div class="macro-value">{{ total_carbs }}g</div>
+      <div class="macro-goal">/ {{ goal.carbs_goal }}g</div>
+      <div class="progress mt-2" style="height:6px">
+        <div class="progress-bar bg-info" style="width:{{ pct_carbs }}%"></div>
+      </div>
+      <div class="macro-pct">{{ pct_carbs }}%</div>
+    </div>
+  </div>
+
+  <div class="col-6 col-md-3">
+    <div class="macro-card fats-card">
+      <div class="macro-label">Fats</div>
+      <div class="macro-value">{{ total_fats }}g</div>
+      <div class="macro-goal">/ {{ goal.fats_goal }}g</div>
+      <div class="progress mt-2" style="height:6px">
+        <div class="progress-bar bg-danger" style="width:{{ pct_fats }}%"></div>
+      </div>
+      <div class="macro-pct">{{ pct_fats }}%</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Protein goal highlight bar -->
+<div class="goal-bar-wrapper mb-4">
+  <div class="d-flex justify-content-between align-items-center mb-1">
+    <span class="fw-600">Protein Goal</span>
+    <span class="text-success fw-600">{{ total_protein }}g / {{ goal.protein_goal }}g</span>
+  </div>
+  <div class="progress" style="height:14px;border-radius:8px">
+    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+         role="progressbar" style="width:{{ pct_protein }}%"
+         aria-valuenow="{{ pct_protein }}" aria-valuemin="0" aria-valuemax="100">
+      {% if pct_protein > 10 %}{{ pct_protein }}%{% endif %}
+    </div>
+  </div>
+  {% if pct_protein >= 100 %}
+    <div class="mt-2 text-success fw-600">🎯 Protein goal hit!</div>
+  {% else %}
+    <div class="mt-2 text-muted small">{{ goal.protein_goal|add:"-0" }} g to go — keep pushing!</div>
+  {% endif %}
+</div>
+
+<!-- Food log by meal -->
+{% if entries %}
+  {% for meal_label, meal_entries in meals.items %}
+  <div class="meal-section mb-4">
+    <h5 class="meal-heading">{{ meal_label }}</h5>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead>
+          <tr>
+            <th>Food</th>
+            <th class="text-center">Calories</th>
+            <th class="text-center">Protein</th>
+            <th class="text-center">Carbs</th>
+            <th class="text-center">Fats</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for entry in meal_entries %}
+          <tr>
+            <td class="fw-500">{{ entry.name }}</td>
+            <td class="text-center">{{ entry.calories }}</td>
+            <td class="text-center text-success fw-500">{{ entry.protein }}g</td>
+            <td class="text-center">{{ entry.carbs }}g</td>
+            <td class="text-center">{{ entry.fats }}g</td>
+            <td class="text-end">
+              <form method="post" action="{% url 'delete_entry' entry.pk %}" class="d-inline" onsubmit="return confirm('Remove {{ entry.name }}?')">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-outline-danger">✕</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% endfor %}
+{% else %}
+  <div class="empty-state text-center py-5">
+    <div class="empty-icon">🥗</div>
+    <h5 class="mt-3">Nothing logged yet today</h5>
+    <p class="text-muted">Start by logging your first meal.</p>
+    <a href="{% url 'add_food' %}" class="btn btn-primary mt-2">Log Food Now</a>
+  </div>
+{% endif %}
+
+{% endblock %}

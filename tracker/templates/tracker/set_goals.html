@@ -1,0 +1,55 @@
+{% extends 'tracker/base.html' %}
+{% block title %}Set Goals — FuelTrack{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-6">
+
+    <div class="d-flex align-items-center gap-3 mb-4">
+      <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary btn-sm">← Back</a>
+      <h1 class="page-title mb-0">Daily Goals</h1>
+    </div>
+
+    <div class="form-card">
+      <form method="post">
+        {% csrf_token %}
+
+        <div class="mb-4">
+          <label class="form-label fw-500 text-success">🎯 Protein Goal (g)</label>
+          {{ form.protein_goal }}
+          <div class="form-text">Your main goal. Aim for ~1.6–2.2g per kg of bodyweight.</div>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label fw-500">🔥 Calorie Goal (kcal)</label>
+          {{ form.calorie_goal }}
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label fw-500">🌾 Carbs Goal (g)</label>
+          {{ form.carbs_goal }}
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label fw-500">🥑 Fats Goal (g)</label>
+          {{ form.fats_goal }}
+        </div>
+
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary btn-lg">Save Goals</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="mt-4 p-3 rounded tip-box">
+      <p class="mb-1 fw-500">💡 Quick reference</p>
+      <ul class="mb-0 text-muted small">
+        <li>Protein: 4 kcal per gram</li>
+        <li>Carbs: 4 kcal per gram</li>
+        <li>Fats: 9 kcal per gram</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

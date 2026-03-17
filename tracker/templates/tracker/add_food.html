@@ -1,0 +1,96 @@
+{% extends 'tracker/base.html' %}
+{% block title %}Log Food — FuelTrack{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-7">
+
+    <div class="d-flex align-items-center gap-3 mb-4">
+      <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary btn-sm">← Back</a>
+      <h1 class="page-title mb-0">Log a Food</h1>
+    </div>
+
+    <div class="form-card">
+      <form method="post">
+        {% csrf_token %}
+
+        <div class="mb-3">
+          <label class="form-label fw-500">Food Name</label>
+          {{ form.name }}
+          {% if form.name.errors %}<div class="invalid-feedback d-block">{{ form.name.errors }}</div>{% endif %}
+        </div>
+
+        <div class="row g-3 mb-3">
+          <div class="col-6">
+            <label class="form-label fw-500">Meal</label>
+            {{ form.meal_type }}
+          </div>
+          <div class="col-6">
+            <label class="form-label fw-500">Date</label>
+            {{ form.date }}
+          </div>
+        </div>
+
+        <hr class="my-3">
+        <p class="text-muted small mb-3">Nutrition per serving</p>
+
+        <div class="row g-3 mb-4">
+          <div class="col-6">
+            <label class="form-label fw-500">Calories (kcal)</label>
+            {{ form.calories }}
+          </div>
+          <div class="col-6">
+            <label class="form-label fw-500 text-success">Protein (g)</label>
+            {{ form.protein }}
+          </div>
+          <div class="col-6">
+            <label class="form-label fw-500">Carbs (g)</label>
+            {{ form.carbs }}
+          </div>
+          <div class="col-6">
+            <label class="form-label fw-500">Fats (g)</label>
+            {{ form.fats }}
+          </div>
+        </div>
+
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary btn-lg">Add to Log</button>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- Quick add suggestions -->
+    <div class="mt-4">
+      <p class="text-muted small mb-2">Quick-fill common high-protein foods:</p>
+      <div class="d-flex flex-wrap gap-2">
+        <button class="btn btn-outline-secondary btn-sm quick-add"
+          data-name="Grilled Chicken Breast (100g)" data-cal="165" data-pro="31" data-carb="0" data-fat="3.6">
+          🍗 Chicken Breast
+        </button>
+        <button class="btn btn-outline-secondary btn-sm quick-add"
+          data-name="Greek Yogurt (200g)" data-cal="130" data-pro="17" data-carb="9" data-fat="0.7">
+          🥛 Greek Yogurt
+        </button>
+        <button class="btn btn-outline-secondary btn-sm quick-add"
+          data-name="Boiled Eggs (2)" data-cal="155" data-pro="13" data-carb="1.1" data-fat="10.6">
+          🥚 Eggs ×2
+        </button>
+        <button class="btn btn-outline-secondary btn-sm quick-add"
+          data-name="Canned Tuna (100g)" data-cal="116" data-pro="26" data-carb="0" data-fat="1">
+          🐟 Tuna
+        </button>
+        <button class="btn btn-outline-secondary btn-sm quick-add"
+          data-name="Whey Protein Shake" data-cal="120" data-pro="25" data-carb="3" data-fat="2">
+          💪 Protein Shake
+        </button>
+        <button class="btn btn-outline-secondary btn-sm quick-add"
+          data-name="Paneer (100g)" data-cal="265" data-pro="18" data-carb="3.4" data-fat="20">
+          🧀 Paneer
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
